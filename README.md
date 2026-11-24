@@ -22,6 +22,7 @@ not copied here.
 
 | agent | what it does |
 |---|---|
+| [`coach`](agents/coach.md) | career coach that runs a CV-to-offer conveyor belt: titles, tailored CVs, interview answers, per-job application packs; expects a project `AGENTS.md` defining the belt and the `interview-speak` skill |
 | [`task-runner`](agents/task-runner.md) | works a project's OpenChamber todo (or `Todo.md`) backlog end to end, one experiment at a time, with subagents; reports verdicts at the end and leaves the decision to you |
 
 ## Commands
@@ -99,6 +100,7 @@ Copying overwrites files of the same name, so back up anything you have edited l
 ```
 .
 ├── agents/
+│   ├── coach.md
 │   └── task-runner.md
 ├── commands/
 │   ├── bro.md
@@ -128,6 +130,7 @@ a copy loaded by path would need `scripts/build-gui.mjs` from upstream, which is
 - `oc-notify.json` (the ntfy topic), `service.json`, and the OpenCode auth files: secrets stay local.
 - `opencode.jsonc`: machine-specific MCP server paths and the local plugin path.
 - the `circuitikz` skill: kept local.
+- the `interview-speak` skill, the career `AGENTS.md`, and everything under `career/`: they live in the CV project, which `coach` is written for.
 
 ## Updating
 
