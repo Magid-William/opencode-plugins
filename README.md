@@ -3,7 +3,7 @@
 My [OpenCode](https://opencode.ai) setup: the plugins I run, plus my agents, commands and skills.
 
 The plugin sources are a trimmed copy of [rizal72/opencode-plugins](https://github.com/rizal72/opencode-plugins), keeping
-the four plugins I actually run. Upstream is MIT; this repository keeps the same license and the original copyright.
+the three plugins I actually run. Upstream is MIT; this repository keeps the same license and the original copyright.
 Everything under `agents/`, `commands/` and `skills/` is mine.
 
 ## Plugins
@@ -12,7 +12,6 @@ Everything under `agents/`, `commands/` and `skills/` is mine.
 |---|---|---|---|---|
 | [`oc-budget`](plugins/oc-budget/README.md) | how much credit is left on the account behind the model: sidebar, footer, `/budget` | sidebar, footer, `/budget` | header widget | `@rizal72/oc-budget` |
 | [`oc-donsetch`](plugins/oc-donsetch/README.md) | keeps the `donsetch` binary current, once a day | none | none | not published |
-| [`oc-notify`](plugins/oc-notify/README.md) | a push notification on the phone when a turn ends, through ntfy | none | settings page | `@rizal72/oc-notify` |
 | [`oc-session-search`](plugins/oc-session-search/README.md) | `session_search`: keyword search over past session transcripts | none | none | `@rizal72/oc-session-search` |
 
 The other plugins upstream (models-pro, plugin-updates, git, coffee, ponytail-widget, tps-meter, context) are
@@ -48,12 +47,11 @@ Source of the skill text: [Articles/Skills/internet-budget.md](https://github.co
 
 ### Plugins
 
-Three of the four are published on npm and install normally, which also keeps `opencode plugin check/update`
+Two of the three are published on npm and install normally, which also keeps `opencode plugin check/update`
 working:
 
 ```sh
 opencode plugin add @rizal72/oc-budget
-opencode plugin add @rizal72/oc-notify
 opencode plugin add @rizal72/oc-session-search
 ```
 
@@ -63,7 +61,6 @@ opencode plugin add @rizal72/oc-session-search
 ```jsonc
 "plugins": [
   "@rizal72/oc-budget",
-  "@rizal72/oc-notify",
   "@rizal72/oc-session-search",
   "C:/Users/MW/opencode-plugins/plugins/oc-donsetch"
 ]
@@ -75,8 +72,7 @@ It also needs the binary it maintains, which is a separate install:
 npm i -g donsetch
 ```
 
-`oc-notify` needs an ntfy topic in `~/.config/opencode/oc-notify.json`; see its README. `oc-budget` reads the
-credentials already stored by `opencode auth login` and needs no configuration of its own.
+`oc-budget` reads the credentials already stored by `opencode auth login` and needs no configuration of its own.
 
 ### Agents, commands and skills
 
@@ -112,7 +108,6 @@ Copying overwrites files of the same name, so back up anything you have edited l
 ├── plugins/
 │   ├── oc-budget/
 │   ├── oc-donsetch/
-│   ├── oc-notify/
 │   └── oc-session-search/
 ├── skills/
 │   └── internet-budget/
@@ -127,7 +122,7 @@ a copy loaded by path would need `scripts/build-gui.mjs` from upstream, which is
 
 ## Not in this repo
 
-- `oc-notify.json` (the ntfy topic), `service.json`, and the OpenCode auth files: secrets stay local.
+- `service.json` and the OpenCode auth files: secrets stay local.
 - `opencode.jsonc`: machine-specific MCP server paths and the local plugin path.
 - the `circuitikz` skill: kept local.
 - the `interview-speak` skill, the career `AGENTS.md`, and everything under `career/`: they live in the CV project, which `coach` is written for.
@@ -136,7 +131,7 @@ a copy loaded by path would need `scripts/build-gui.mjs` from upstream, which is
 
 ```sh
 git -C C:/Users/MW/opencode-plugins pull     # oc-donsetch follows the checkout, nothing else to do
-opencode plugin update                       # the three npm packages
+opencode plugin update                       # the two npm packages
 ```
 
 Upstream plugins: https://github.com/rizal72/opencode-plugins - issues and fixes for them belong there.
