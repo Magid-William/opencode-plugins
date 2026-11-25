@@ -3,15 +3,15 @@
 My [OpenCode](https://opencode.ai) setup: the plugins I run, plus my agents, commands and skills.
 
 The plugin sources are a trimmed copy of [rizal72/opencode-plugins](https://github.com/rizal72/opencode-plugins), keeping
-the three plugins I actually run. Upstream is MIT; this repository keeps the same license and the original copyright.
-Everything under `agents/`, `commands/` and `skills/` is mine.
+the two plugins I actually run. Upstream is MIT; this repository keeps the same license and the original copyright.
+The agents and commands are mine, as is the `internet-budget` skill. The `i-have-adhd` skill is vendored from
+[ayghri/i-have-adhd](https://github.com/ayghri/i-have-adhd), also MIT.
 
 ## Plugins
 
 | plugin | what it does | TUI | GUI | npm |
 |---|---|---|---|---|
 | [`oc-budget`](plugins/oc-budget/README.md) | how much credit is left on the account behind the model: sidebar, footer, `/budget` | sidebar, footer, `/budget` | header widget | `@rizal72/oc-budget` |
-| [`oc-donsetch`](plugins/oc-donsetch/README.md) | keeps the `donsetch` binary current, once a day | none | none | not published |
 | [`oc-session-search`](plugins/oc-session-search/README.md) | `session_search`: keyword search over past session transcripts | none | none | `@rizal72/oc-session-search` |
 
 The other plugins upstream (models-pro, plugin-updates, git, coffee, ponytail-widget, tps-meter, context) are
@@ -39,37 +39,21 @@ not copied here.
 
 | skill | what it does |
 |---|---|
+| [`i-have-adhd`](skills/i-have-adhd/SKILL.md) | shape every response for an ADHD reader: action first, numbered steps, state restated each turn, no preamble or closers; stays on until "stop adhd mode" |
 | [`internet-budget`](skills/internet-budget/SKILL.md) | check what is already local, estimate the size, and ask before any sizeable download; the connection is metered |
 
-Source of the skill text: [Articles/Skills/internet-budget.md](https://github.com/Magid-William/Articles/blob/main/Skills/internet-budget.md).
+Source of the `internet-budget` skill text: [Articles/Skills/internet-budget.md](https://github.com/Magid-William/Articles/blob/main/Skills/internet-budget.md).
+Source of the `i-have-adhd` skill: [ayghri/i-have-adhd](https://github.com/ayghri/i-have-adhd) (MIT).
 
 ## Install
 
 ### Plugins
 
-Two of the three are published on npm and install normally, which also keeps `opencode plugin check/update`
-working:
+Both are published on npm, so they install normally, which also keeps `opencode plugin check/update` working:
 
 ```sh
 opencode plugin add @rizal72/oc-budget
 opencode plugin add @rizal72/oc-session-search
-```
-
-`oc-donsetch` is not on npm, so it loads from this checkout by path - one entry in
-`~/.config/opencode/opencode.jsonc`, adjusted to wherever the clone lives:
-
-```jsonc
-"plugins": [
-  "@rizal72/oc-budget",
-  "@rizal72/oc-session-search",
-  "C:/Users/MW/opencode-plugins/plugins/oc-donsetch"
-]
-```
-
-It also needs the binary it maintains, which is a separate install:
-
-```sh
-npm i -g donsetch
 ```
 
 `oc-budget` reads the credentials already stored by `opencode auth login` and needs no configuration of its own.
@@ -107,9 +91,11 @@ Copying overwrites files of the same name, so back up anything you have edited l
 │   └── x.md
 ├── plugins/
 │   ├── oc-budget/
-│   ├── oc-donsetch/
 │   └── oc-session-search/
 ├── skills/
+│   ├── i-have-adhd/
+│   │   ├── agents/
+│   │   └── SKILL.md
 │   └── internet-budget/
 │       └── SKILL.md
 ├── LICENSE
@@ -123,14 +109,14 @@ a copy loaded by path would need `scripts/build-gui.mjs` from upstream, which is
 ## Not in this repo
 
 - `service.json` and the OpenCode auth files: secrets stay local.
-- `opencode.jsonc`: machine-specific MCP server paths and the local plugin path.
+- `opencode.jsonc`: machine-specific MCP server paths.
 - the `circuitikz` skill: kept local.
 - the `interview-speak` skill, the career `AGENTS.md`, and everything under `career/`: they live in the CV project, which `coach` is written for.
 
 ## Updating
 
 ```sh
-git -C C:/Users/MW/opencode-plugins pull     # oc-donsetch follows the checkout, nothing else to do
+git -C C:/Users/MW/opencode-plugins pull     # agents, commands and skills follow the checkout
 opencode plugin update                       # the two npm packages
 ```
 
